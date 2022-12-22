@@ -12,8 +12,8 @@ const TopicPage = () => {
     const availableFilterNames: PostFilterNames[] = [PostFilterNames.Content, PostFilterNames.Title];
 
     const filters = fetchFiltersFromUrlSearchParams(searchParams, availableFilterNames);
+    // сделал бы {filters} если есть возможность
     filters.filters.push({path: PostFilterNames.Topic, value: topicName || ""});
-
 
     const topicPagePagingConditions = {
         pageSize: DefaultPageSize,

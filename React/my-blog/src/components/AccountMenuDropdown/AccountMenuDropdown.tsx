@@ -12,8 +12,10 @@ import {useNotifier} from '../../hooks';
 
 const AccountMenuDropdown = ({icon}: { icon: JSX.Element }) => {
 
+    // а что если юзать useRef для anchorEl
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>();
     const [modalOpen, setModalOpen] = useState<boolean>(false);
+    // тут по идее всегда false
     const isDropdownOpened = Boolean(anchorEl);
     const notifyUser = useNotifier();
 
@@ -29,7 +31,7 @@ const AccountMenuDropdown = ({icon}: { icon: JSX.Element }) => {
         deleteUserFromRedux();
         notifyUser("Logged out successfully", "success");
     }
-
+    // такое можно сразу прописывать в пропсах не вынося в функцию 
     const openLogoutModal = () => setModalOpen(true);
 
     const handleDropdownTriggerClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);

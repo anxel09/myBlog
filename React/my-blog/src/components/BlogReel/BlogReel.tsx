@@ -52,7 +52,11 @@ const BlogReel = ({
         pivotElementId: pagingRequestDefault.pivotElementId
     });
 
-    const fetchPosts = (pagingRequest: CursorPagedRequest) => postApi.getCursorPagedPosts(pagingRequest).then((result: AxiosResponse<CursorPagedResult<PostModel>>) => result.data);
+    // useCallBack
+    const fetchPosts = (pagingRequest: CursorPagedRequest) => (
+        postApi.getCursorPagedPosts(pagingRequest)
+        .then((result: AxiosResponse<CursorPagedResult<PostModel>>) => result.data)
+    );
 
     const loadMorePosts = (request: CursorPagedRequest, doCleanPosts: boolean): void => {
 
@@ -84,15 +88,25 @@ const BlogReel = ({
 
         let request = {
             ...pagingRequestConfiguration,
+            // лучше null ставь вместо undefined
             pivotElementId: undefined,
             requestFilters: filters
         };
 
         loadMorePosts(request, true);
+        // тут реакт не просил useCallBack ? + [loadMorePosts, setNoMorePosts] 
     }, [filters]);
 
 
     const handleNewPost = async (post: PostDto): Promise<AxiosResponse<PostModel>> => {
+        // const {status, data} = postApi.addPost(post);
+        // if (status === 200 && user) {
+        //     data.authorUsername = user?.username;
+        //     data.authorId = user?.id;
+        //     setPosts([data, ...posts]);
+        // }
+        // return data;
+        // я бы как-то так описал
         return postApi.addPost(post).then((result: AxiosResponse<PostModel>) => {
             if (result.status === 200 && user) {
                 result.data.authorUsername = user?.username;

@@ -4,11 +4,13 @@ import {BlogReel} from '../../components/BlogReel';
 import {fetchFiltersFromUrlSearchParams, PostFilterNames} from '../../shared/assets';
 import {DefaultPageSize} from '../../shared/config';
 
+const {Content, Title, Topic} = PostFilterNames;
+
 const HomePage = () => {
 
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams(Content, Title, Topic);
 
-    const availableFilterNames: PostFilterNames[] = [PostFilterNames.Content, PostFilterNames.Title, PostFilterNames.Topic];
+    const availableFilterNames: PostFilterNames[] = [];
 
     const homePagingConditions = {
         pageSize: DefaultPageSize,

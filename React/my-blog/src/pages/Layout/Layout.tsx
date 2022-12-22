@@ -18,7 +18,7 @@ const Layout = () => {
 
     return (
         <>
-            <div style={{height: "5vh", minHeight: "70px"}}></div>
+            <div style={{height: "5vh", minHeight: "70px"}} />
             <Header/>
             <main>
                 <CustomSnackbar isOpen={notificationRaised} alertMessage={notificationProps.message}

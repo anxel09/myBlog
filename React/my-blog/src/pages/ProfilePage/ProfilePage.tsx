@@ -50,7 +50,8 @@ const ProfilePage = () => {
 
     useEffect(() => {
         setLoading(true);
-
+        // тут warning не выходит ? чтобы добавить в массив зависимостей ? + нужен useCallback
+        // функцию обернуть чтобы реакт не ахуел
         fetchUser().then((response: AxiosResponse<UserModel>) => {
 
             console.log(response);
@@ -102,42 +103,45 @@ const ProfilePage = () => {
             {
                 (isLoading)
                     ?
-                    <CenteredLoader/>
+                    <CenteredLoader />
                     :
                     <>
-                        {user && !hasError ?
-                            <>
-                                <ProfileHeader setUser={setUser} user={user}/>
+                        {user && !hasError
+                            ? (
+                                <>
+                                    <ProfileHeader setUser={setUser} user={user}/>
 
-                                <Box style={{width: "70vw", margin: "0 auto"}}>
-                                    <Box>
-                                        <Tabs value={visibleTabIndex} onChange={handleTabChange}>
-                                            <Tab label="Posts" {...tabProps(0)}/>
-                                            <Tab label="Comments" {...tabProps(1)}/>
-                                        </Tabs>
-                                    </Box>
+                                    <Box style={{width: "70vw", margin: "0 auto"}}>
+                                        <Box>
+                                            <Tabs value={visibleTabIndex} onChange={handleTabChange}>
+                                                <Tab label="Posts" {...tabProps(0)}/>
+                                                <Tab label="Comments" {...tabProps(1)}/>
+                                            </Tabs>
+                                        </Box>
 
-                                    <CustomTabPanel index={0} value={visibleTabIndex}>
-                                        {pageRequestPostReel && <BlogReel reelWidth="100%" pageSize={DefaultPageSize}
-                                                                          pagingRequestDefault={pageRequestPostReel}
+                                        <CustomTabPanel index={0} value={visibleTabIndex}>
+                                            {pageRequestPostReel && <BlogReel reelWidth="100%" pageSize={DefaultPageSize}
+                                                                            pagingRequestDefault={pageRequestPostReel}
                                         />}
-                                    </CustomTabPanel>
+                                        </CustomTabPanel>
 
-                                    <CustomTabPanel index={1} value={visibleTabIndex}>
-                                        {<CommentReel enableInfiniteScroll reelWidth="100%"
-                                                      pagingRequestDefault={pageRequestCommentReel}></CommentReel>}
-                                    </CustomTabPanel>
+                                        <CustomTabPanel index={1} value={visibleTabIndex}>
+                                            {<CommentReel enableInfiniteScroll reelWidth="100%"
+                                                        pagingRequestDefault={pageRequestCommentReel}></CommentReel>}
+                                        </CustomTabPanel>
+                                    </Box>
+                                </>
+                            )
+                            : (
+                                <Box style={{margin: "15% auto"}}>
+                                    <Typography variant={"h2"} style={{textAlign: "center"}}>
+                                        {errorText}
+                                    </Typography>
+
+                                    <CancelIcon
+                                        style={{margin: "0 auto", display: "block", width: "100px", height: "100px"}}/>
                                 </Box>
-                            </>
-                            :
-                            <Box style={{margin: "15% auto"}}>
-                                <Typography variant={"h2"} style={{textAlign: "center"}}>
-                                    {errorText}
-                                </Typography>
-
-                                <CancelIcon
-                                    style={{margin: "0 auto", display: "block", width: "100px", height: "100px"}}/>
-                            </Box>
+                            )
                         }
                     </>
             }

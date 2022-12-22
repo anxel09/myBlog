@@ -28,13 +28,14 @@ const CommentCard = ({width = "100%", initialComment, disappearCommentCallback, 
 
     const handleOpenMenu = (e: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(e.currentTarget);
 
-    const closeMenu = () => setAnchorEl(null);
+    // это можно писать сразу в пропсах
+    // const closeMenu = () => setAnchorEl(null);
 
-    const openDeleteCommentDialog = () => setConfirmDeleteDialogOpen(true);
+    // const openDeleteCommentDialog = () => setConfirmDeleteDialogOpen(true);
 
-    const openEditWindow = () => setEditPostMode(true);
+    // const openEditWindow = () => setEditPostMode(true);
 
-    const handleCloseEditWindow = () => setEditPostMode(false);
+    // const handleCloseEditWindow = () => setEditPostMode(false);
 
     const handleEditComment = async (commentDto: CommentDto): Promise<AxiosResponse<CommentModel>> => {
         return commentApi.editComment(comment.id, commentDto).then((result: AxiosResponse<CommentModel>) => {

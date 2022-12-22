@@ -13,16 +13,17 @@ const PostPage = () => {
     const {postId} = useParams();
     const [post, setPost] = useState<PostModel>();
     const [hasError, setError] = useState<boolean>(false);
-    const [isLoading, setLoading] = useState<boolean>();
+    const [isLoading, setLoading] = useState<boolean>(false);
 
     const handleDeletePostAndRedirectToHomePage = () => <Navigate to={`/`}/>
 
     useEffect(() => {
         setLoading(true);
-
+        // postID может быть и другим типом данных ? что если сделать id (postId)
         if (typeof postId === "string") {
+            // я бы делал через await легче читается и как знаю хороая практика
             postApi.getPostById(parseInt(postId) || 0).then((result: AxiosResponse<PostModel>) => {
-                console.log(result.data);
+                console.log(result.data); // Удаляй логи если не юзаешь больше
                 setPost(result.data)
             })
                 .catch(() => {
